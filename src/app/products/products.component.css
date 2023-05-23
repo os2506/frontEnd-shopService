@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .content {
+
+    /* display: flex; */
+    /* flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: hidden; */
+  }
+
+  .grid-container {
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0 120px;
+  }
+  

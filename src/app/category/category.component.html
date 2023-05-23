@@ -1,0 +1,11 @@
+<div class="block-category-navigation">
+  <div class="title">
+    <strong>Categories</strong>
+</div>
+<div class="listbox">
+  <ul class="list">
+    <li *ngFor="let category of categories" (click)="filterByCategory(category)">
+      {{ category }}
+    </li>
+  </ul>
+</div>

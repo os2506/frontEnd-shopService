@@ -1,0 +1,12 @@
+<ng-container *ngIf="!showDashboard">
+  <app-header></app-header>
+  <app-header-menu (categorySelected)="onCategorySelected($event)" (adminMenuClicked)="onAdminMenuClicked()"></app-header-menu>
+  
+  <!-- Other components or content -->
+  <router-outlet></router-outlet>
+
+  <app-footer></app-footer>
+</ng-container>
+
+<app-dashboard *ngIf="showDashboard"></app-dashboard>
+

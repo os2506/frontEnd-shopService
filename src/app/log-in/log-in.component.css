@@ -1,0 +1,64 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 200vh;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .card-container {
+    max-width: 2000px; /* Adjust the maximum width as needed */
+    margin-top: 20px; /* Adjust the top margin as needed */
+  }
+  
+  .center-button {
+    margin-top: 20px; /* Adjust the top margin as needed */
+  }
+
+
+  .card-container2 {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    flex: 1 1 auto;
+    margin-right: 16px; /* Optional: Add margin between cards */
+  }
+
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+
+  a.mat-button {
+    color: #2196f3; /* Set the text color */
+    text-decoration: none; /* Remove the underline */
+    display: inline-block; /* Display as a block element */
+    padding: 0; /* Remove any padding */
+    background-color: transparent; /* Set the background color to transparent */
+    border: none; /* Remove the border */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+  }
+  
+  a.mat-button:hover {
+    text-decoration: underline; /* Add underline on hover */
+  }

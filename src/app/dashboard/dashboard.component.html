@@ -1,0 +1,133 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <!-- <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" /> -->
+  </ng-template>
+  <ng-template pTemplate="end">
+    <input type="text" pInputText placeholder="Search" class="w-full" />
+  </ng-template>
+</p-menubar>
+
+
+<!-- UTILISATEUR -->
+<div class="card">
+  <p-table *ngIf="showUserTable" [columns]="cols" [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns">
+          <ng-container *ngIf="col.field === 'roles'">
+            <span *ngIf="rowData.roles">
+              {{ getRoleNames(rowData.roles) }}
+            </span>
+          </ng-container>
+          <ng-container *ngIf="!col.bodyTemplate && col.field !== 'roles'">
+            {{ rowData[col.field] }}
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+
+
+
+<!-- PRODUCT -->
+<div>
+  <p-table *ngIf="showProductTable" [value]="products" [(selection)]="selectedProduct" dataKey="code"
+    [paginator]="true" [rows]="5" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10, 25, 50]">
+
+
+    <!-- Table header -->
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        Products
+        <p-button icon="pi pi-refresh"></p-button>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3%">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <!-- <th pSortableColumn="code" style="width: 17%">
+          Code <p-sortIcon field="code"></p-sortIcon>
+        </th> -->
+        <th pSortableColumn="Name" style="width: 17%">
+          Name <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Description" style="width: 17%">
+          Description <p-sortIcon field="description"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Image" style="width: 17%">Image</th>
+        <th pSortableColumn="Price" style="width: 17%">
+          Price <p-sortIcon field="price"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Category" style="width: 17%">
+          Category <p-sortIcon field="category"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Quantity" style="width: 17%">Quantity</th>
+        <th pSortableColumn="Reviews" style="width: 17%">Reviews</th>
+        <th pSortableColumn="Status" style="width: 17%">
+          Status <p-sortIcon field="inventoryStatus"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- Table body -->
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
+        <!-- <td>{{ product.code }}</td> -->
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>
+          <img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name"
+            width="100" class="shadow-4" />
+        </td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating>
+        </td>
+        <td>
+          <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
+        </td>
+      </tr>
+    </ng-template>
+
+    <!-- Table summary -->
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{ products ? products.length : 0 }} products.
+      </div>
+    </ng-template>
+
+    <!-- Table footer paginator -->
+    <ng-template pTemplate="paginatorleft">
+      <p-button type="button" icon="pi pi-refresh" styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+    </ng-template>
+    <ng-template pTemplate="paginatorright">
+      <p-button type="button" icon="pi pi-times" styleClass="p-button-danger"
+        (click)="deleteSelectedProducts()"></p-button>
+    </ng-template>
+  </p-table>
+  <!-- Modification product -->
+  <div *ngIf="selectedProduct">
+    <p-dialog header="Edit Product" [(visible)]="displayDialog" [style]="{ width: '70%' }">
+      <app-product-edit [product]="selectedProduct"></app-product-edit>
+      <button pButton type="button" label="Save" class="p-button-success" (click)="saveProduct()"></button>
+      <button pButton type="button" label="Cancel" class="p-button-secondary" (click)="cancelEdit()"></button>
+    </p-dialog>
+  </div>
+</div>

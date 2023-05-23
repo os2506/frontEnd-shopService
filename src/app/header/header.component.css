@@ -1,0 +1,49 @@
+
+
+  .backRoundTool {
+    background-color:rgb(236, 233, 233);
+  }
+
+  .logo {
+    width: 100px;
+    height: auto; /* Adjust the height as needed */
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+  }
+  
+  .header-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 170vh;
+    border: 0px solid silver;
+    padding: 0px;
+  }
+  
+
+  .toolbar-row {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .button-container {
+    display: flex;
+    align-items: center;
+  }
+
+  
+    .toolbar-row-search {
+      margin-left: auto;
+    }
+  
+    .username-display {
+      font-weight: bold;
+      color: #333;
+    }    
