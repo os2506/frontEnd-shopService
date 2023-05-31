@@ -12,9 +12,9 @@ export class CategoryComponent implements OnInit {
   products: Product[] = [];
   categories: string[] = [];
   selectedCategory: string | null = null;
-  filteredProducts: Product[] = []; // Declare the filteredProducts property
+  filteredProducts: Product[] = [];
 
-  constructor(private productService: ProductsService) {}
+  constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {
     this.getProducts();

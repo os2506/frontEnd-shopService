@@ -12,14 +12,14 @@ export class RecoverPasswordComponent implements OnInit {
 
   recoverForm!: FormGroup;
   isRecovering = false;
-  
-    constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) { }
+
+  constructor(private router: Router, private formBuilder: FormBuilder, private http: HttpClient) { }
 
 
-    ngOnInit() {
-      this.recoverForm = this.formBuilder.group({
-        email: ['', [Validators.required, Validators.email]]
-      });
+  ngOnInit() {
+    this.recoverForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   recover() {
@@ -45,19 +45,19 @@ export class RecoverPasswordComponent implements OnInit {
     console.log(formData);
     // Send the form data to the backend
     this.http.post('http://localhost:8085/users/recover', this.recoverForm.value).subscribe(
-  (response: any) => {
+      (response: any) => {
         // Handle the response from the backend
         console.log(response);
         if (response.message === "User exists!") {
           // user exist
           const email = this.recoverForm.value.email;
           this.router.navigate(['/pwdrecover'], { queryParams: { email } });
-          
-        } else{
-            // user not found
+
+        } else {
+          // user not found
           this.router.navigate(['home']);
         }
-        
+
       },
       error => {
         // Handle any errors that occurred during the request

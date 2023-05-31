@@ -11,9 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class HeaderMenuComponent implements OnInit {
   headerCategories: string[] = [];
   @Output() categorySelected: EventEmitter<string> = new EventEmitter<string>();
-
   @Output() adminMenuClicked: EventEmitter<void> = new EventEmitter<void>();
-
 
   constructor(private productService: ProductsService, private router: Router) { }
 
@@ -21,7 +19,7 @@ export class HeaderMenuComponent implements OnInit {
   onAdminMenuClicked() {
     this.adminMenuClicked.emit();
   }
-  
+
   ngOnInit() {
     this.getHeaderCategories();
   }
@@ -41,9 +39,6 @@ export class HeaderMenuComponent implements OnInit {
       }
     );
   }
-
-  
-
   filterByCategory(category: string) {
     this.categorySelected.emit(category);
     this.router.navigate(['/products'], { queryParams: { category: category } });

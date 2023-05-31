@@ -10,25 +10,26 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./recoverpassword-form.component.css']
 })
 export class RecoverpasswordFormComponent implements OnInit {
-  
+
   email!: string;
   pwdrecoverForm!: FormGroup;
 
-  constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private http: HttpClient, private toastr: ToastrService) { }
+  constructor(private router: Router,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private toastr: ToastrService) { }
 
-    ngOnInit() {
-      this.route.queryParams.subscribe(params => {
-        this.email = params['email'];
-        // Now you have access to the email value
-        console.log(this.email);
-        // Use the email value as needed
-      });
-  
-      this.pwdrecoverForm = this.formBuilder.group({
-        newPassword: ['', Validators.required],
-        confirmNewPassword: ['', Validators.required]
-      }, { validators: this.passwordMatchValidator });
-    }
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.email = params['email'];
+    });
+
+    this.pwdrecoverForm = this.formBuilder.group({
+      newPassword: ['', Validators.required],
+      confirmNewPassword: ['', Validators.required]
+    }, { validators: this.passwordMatchValidator });
+  }
 
 
   get passwordsMatch(): boolean {
@@ -40,7 +41,7 @@ export class RecoverpasswordFormComponent implements OnInit {
   passwordMatchValidator(form: FormGroup) {
     const newPassword = form.get('newPassword')?.value;
     const confirmNewPassword = form.get('confirmNewPassword')?.value;
-  
+
     if (newPassword !== confirmNewPassword) {
       form.get('confirmPassword')?.setErrors({ misMatch: true });
     } else {
@@ -48,35 +49,35 @@ export class RecoverpasswordFormComponent implements OnInit {
     }
   }
 
-    onSubmit() {
-      if (this.pwdrecoverForm.valid) {
-        const formData = {
-          email: this.email,
-          newPassword: this.pwdrecoverForm.value.newPassword
-        };
-        
-        this.http.put('http://localhost:8085/users/update-password', formData).subscribe(
+  onSubmit() {
+    if (this.pwdrecoverForm.valid) {
+      const formData = {
+        email: this.email,
+        newPassword: this.pwdrecoverForm.value.newPassword
+      };
+
+      this.http.put('http://localhost:8085/users/update-password', formData).subscribe(
         (response: any) => {
-                console.log(response);
-                if(response.message === "Password updated successfully"){
+          console.log(response);
+          if (response.message === "Password updated successfully") {
 
-                // Show success message using toastr
-                  this.toastr.success(response.message, 'Success');
+            // Show success message using toastr
+            this.toastr.success(response.message, 'Success');
 
-                  this.router.navigate(['/log-in']);
+            this.router.navigate(['/log-in']);
 
-                } else {
+          } else {
 
-                  this.toastr.error(response.message, 'error');
+            this.toastr.error(response.message, 'error');
 
-                  this.router.navigate(['/log-in']);
-                }
-            // Handle the response from the server
-          },
-          (error) => {
-            // Handle any errors that occurred during the request
+            this.router.navigate(['/log-in']);
           }
-        );
-      }
+          // Handle the response from the server
+        },
+        (error) => {
+          // Handle any errors that occurred during the request
+        }
+      );
     }
+  }
 }

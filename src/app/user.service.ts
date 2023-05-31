@@ -8,12 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8085'; // Replace with your Java backend API URL
+  private apiUrl = 'http://localhost:8085';
 
   constructor(private http: HttpClient) {}
 
   //recuperation des utilisateurs
-
   getUsers(): Observable<any> {
     const url = `${this.apiUrl}/users/`;
     return this.http.get(url);

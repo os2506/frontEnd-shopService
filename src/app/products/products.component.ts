@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Product } from '../product.class';
 import { ProductsService } from '../products.service';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { WishlistService } from '../wishlist.service';
+import { WishlistCountService } from '../whishlist-count.service';
 
 @Component({
   selector: 'app-products',
@@ -13,8 +16,13 @@ export class ProductsComponent implements OnInit {
   categories: string[] = [];
   selectedCategory: string | null = null;
   filteredProducts: Product[] = [];
+  token!: any;
 
-  constructor(private productsService: ProductsService, private route: ActivatedRoute) {}
+  constructor(private productsService: ProductsService,
+    private wishlistService: WishlistService,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private wishlistCountService: WishlistCountService) { }
 
 
   ngOnInit(): void {
@@ -50,7 +58,6 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-
   filterByCategory(category: string | null) {
     this.selectedCategory = category;
     this.filterProductsByCategory(category);
@@ -68,4 +75,47 @@ export class ProductsComponent implements OnInit {
       this.filteredProducts = this.products.filter((product) => product.category === category);
     }
   }
+
+
+  //Ajout de produt dans la wishList
+  addProductToWishlist(product: Product) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.wishlistService.addWishlist(product, token).subscribe(
+        response => {
+          console.log("Response:", response);
+          // Handle the case when the product is successfully added to the wishlist
+          console.log("Added to wishlist");
+          // Perform any additional actions you need here
+          // For example, you can update the wishlist count using the shared service
+          this.wishlistCountService.incrementWishlistCount();
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    } else {
+      console.log("Token not available");
+    }
+  }  
+  
+  
+
+  //ajout de la wishList Data
+  addToWishlist(product: Product) {
+    this.addProductToWishlist(product);
+  }
+
+  //recuperation de la wishList Data
+  private getWishListData() {
+    this.wishlistService.getProductsFromWishList()
+      .subscribe(
+        (products: Product[]) => {
+          this.products = products;
+        },
+        (error: any) => {
+          console.error('Error retrieving wishlist data', error);
+        }
+      );}
+
 }

@@ -5,21 +5,22 @@
         <img class="logo" src="../../assets/img/sogetiLabs.png" alt="Logo">
         <span class="spacer"></span>
         <div class="button-container">
-          <div class="username-display" *ngIf="username">
-            Welcome, <span>{{ username }}</span>
+          <div class="username-display" *ngIf="isLoggedIn">
+            Welcome, <span> {{ username }} </span>
           </div>
           <button mat-button>InShopping</button>
-          <button mat-button>Cart(0)</button>
-          <button mat-button>Wishlist(0)</button>
-          <button mat-button [routerLink]="'/log-in'">Log in</button>
+          <button mat-button [routerLink]="'/cart'">Cart ({{ cartlistCount }})</button>
+          <button mat-button [routerLink]="'/wishList'">Wishlist ({{ wishlistCount }})</button>
+
+          <ng-container *ngIf="isLoggedIn; else loggedOutButton">
+            <button mat-button (click)="logOut()">Log out</button>
+          </ng-container>
+          <ng-template #loggedOutButton>
+            <button mat-button [routerLink]="'/log-in'">Log in</button>
+          </ng-template>
+
         </div>
       </mat-toolbar-row>
-      <!-- <mat-toolbar-row class="toolbar-row-search">
-      <form action="/search" method="get" onsubmit="return check_small_search_form()">   
-      <input type="text" class="search-box-text" id="small-searchterms" autocomplete="off" value="Search store" name="q" />
-      <input type="submit" class="button-1 search-box-button" value="Search" />
-      </form>
-      </mat-toolbar-row>-->
     </mat-toolbar>
   </div>
 </div>

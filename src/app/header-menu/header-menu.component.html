@@ -1,7 +1,6 @@
 <div class="header-menu">
   <div class="header-wrapper">
     <div cdkMenuBar>
-      <button class="example-menu-bar-item" cdkMenuItem [routerLink]="'/home'">Home</button>
       <button class="example-menu-bar-item" cdkMenuItem [routerLink]="'/products'">Products</button>
       <button class="example-menu-bar-item" *ngFor="let category of headerCategories"
         (click)="filterByCategory(category)">

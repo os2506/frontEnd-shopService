@@ -8,10 +8,15 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { ProductEditComponent } from '../product-edit/product-edit.component';
 import { PrimeIcons, MenuItem } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { UsernameService } from '../username.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductCreateComponent } from '../product-create/product-create.component';
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
   items: MenuItem[] = [];
@@ -26,13 +31,16 @@ export class DashboardComponent implements OnInit {
   rolesTemplate!: TemplateRef<any>; // Declare the template reference variable
   @ViewChild('productEdit', { static: false }) // Add this line to get a reference to the ProductEditComponent
   productEdit!: ProductEditComponent;
+  username!: string;
 
+  displayAdminButton = false;
+
+  openCreateForm = false; // flag to control the visi of the dialog create form product 
 
   //modification
   //selectedProduct: Product | null = null;
 
   //suppression
-
   selectedProduct: Product | undefined;
 
 
@@ -40,12 +48,19 @@ export class DashboardComponent implements OnInit {
   //constructor
   constructor(private userService: UserService,
     private productService: ProductsService,
-    private dialogService: DialogService) {
+    private dialogService: DialogService,
+    private usernameService: UsernameService,
+    private router: Router,
+    public dialog: MatDialog) {
 
   }
 
 
   ngOnInit() {
+
+    this.usernameService.getUsername().subscribe((username: string) => {
+      this.username = username;
+    });
 
     this.items = [
       {
@@ -61,29 +76,13 @@ export class DashboardComponent implements OnInit {
             icon: 'pi pi-fw pi-user-minus'
           },
           {
-            label: 'Search',
-            icon: 'pi pi-fw pi-users',
-            items: [
-              {
-                label: 'Filter',
-                icon: 'pi pi-fw pi-filter',
-                items: [
-                  {
-                    label: 'Print',
-                    icon: 'pi pi-fw pi-print'
-                  }
-                ]
-              },
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'List',
-                command: () => {
-                  this.showUserTable = true; // Set the flag to show the table
-                  this.showProductTable = false; // Set the flag to show the table
-                },
-              }
-            ]
-          }
+            icon: 'pi pi-fw pi-bars',
+            label: 'List',
+            command: () => {
+              this.showUserTable = true; // Set the flag to show the table
+              this.showProductTable = false; // Set the flag to show the table
+            },
+          },
         ]
       },
       {
@@ -95,34 +94,13 @@ export class DashboardComponent implements OnInit {
             icon: PrimeIcons.PLUS,
           },
           {
-            label: 'Delete',
-            icon: PrimeIcons.TRASH,
-            command: () => this.deleteSelectedProducts()
+            icon: 'pi pi-fw pi-bars',
+            label: 'List',
+            command: () => {
+              this.showProductTable = true; // Set the flag to show the table
+              this.showUserTable = false;
+            },
           },
-          {
-            label: 'Search',
-            icon: 'pi pi-fw pi-search',
-            items: [
-              {
-                label: 'Filter',
-                icon: 'pi pi-fw pi-filter',
-                items: [
-                  {
-                    label: 'Print',
-                    icon: 'pi pi-fw pi-print'
-                  }
-                ]
-              },
-              {
-                icon: 'pi pi-fw pi-bars',
-                label: 'List',
-                command: () => {
-                  this.showProductTable = true; // Set the flag to show the table
-                  this.showUserTable = false;
-                },
-              }
-            ]
-          }
         ]
       },
       {
@@ -143,12 +121,7 @@ export class DashboardComponent implements OnInit {
     this.userService.getUsers().subscribe(
       (users) => {
         this.users = users;
-
-        console.log(users);
         this.showUserTable = true; // Set showUserTable to true after users are fetched
-
-        console.log(this.showUserTable);
-
         this.cols = [
           // Define your column configuration here
           { field: 'username', header: 'Username' },
@@ -210,10 +183,23 @@ export class DashboardComponent implements OnInit {
   onRowSelect(event: any) {
     this.selectedProduct = event.data; // Change property name to 'selectedProduct'
   }
-  
+
+
+
   deleteSelectedProducts() {
-    console.log('Selected product:', this.selectedProduct); // Change property name to 'selectedProduct'
+    console.log('Selected product:', this.selectedProduct);
+    //this.productService.delete(this.selectedProduct?.id);
   }
+
+  // parcourir la liste des ids et supprimer un par un en fonction de lindex.
+  /*
+  public onDeleteProduct(ids: number[]): void {
+    ids.forEach((id) => {
+      this.deleteSelectedProducts(id);
+      this.loadData();
+    });
+  }
+  */
 
 
   onSaveChanges() {
@@ -223,18 +209,28 @@ export class DashboardComponent implements OnInit {
     console.log("Annulation")
   }
 
-   openProductEditPopup(product: Product): void {
+  openProductEditPopup(product: Product): void {
     this.selectedProduct = { ...product }; // Create a copy of the product
-     this.displayDialog = true;
-   }
+    this.displayDialog = true;
+  }
 
   saveProduct(): void {
-    // Add save logic here
-    //this.displayDialog = false; // Close the dialog
   }
 
   cancelEdit(): void {
-    //this.displayDialog = false; // Close the dialog
   }
+
+
+
+  openDialogCreateProduit() {
+    console.log('creation produit');
+    const dialogRef = this.dialog.open(ProductCreateComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+    this.openCreateForm = true;
+  }
+
+
 
 }

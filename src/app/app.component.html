@@ -1,12 +1,22 @@
-<ng-container *ngIf="!showDashboard">
-  <app-header></app-header>
-  <app-header-menu (categorySelected)="onCategorySelected($event)" (adminMenuClicked)="onAdminMenuClicked()"></app-header-menu>
-  
-  <!-- Other components or content -->
-  <router-outlet></router-outlet>
+<ng-container *ngIf="isDashboardRoute()">
+  <app-dashboard></app-dashboard>
+</ng-container>
 
+<!-- Common Sections -->
+<ng-container *ngIf="!isDashboardRoute()">
+  <app-header></app-header>
+  <app-header-menu (categorySelected)="onCategorySelected($event)"></app-header-menu>
+  <router-outlet></router-outlet>
   <app-footer></app-footer>
 </ng-container>
 
-<app-dashboard *ngIf="showDashboard"></app-dashboard>
+<!-- Admin Section -->
+<ng-container *ngIf="isAdminRoute()">
+  <h1>Welcome, Admin!</h1>
+  <!-- Other admin-specific components and content -->
+</ng-container>
 
+<!-- Wishlist Section -->
+<ng-container *ngIf="isWishlistRoute()">
+  <app-wish-list></app-wish-list>
+</ng-container>

@@ -1,54 +1,55 @@
- <div class="content">
-    <div class="card-container"> 
+<div class="content">
+    <div class="card-container">
         <h1>Welcome, Please Sign In!</h1>
         <div class="card-container2">
             <mat-card>
-                    <mat-card-header>
-                        <mat-card-title>New Customer</mat-card-title>
-                    </mat-card-header>
-                        <mat-card-content>
-                            <p>By creating an account on our website you will 
-                                be able to shop faster, be up to date on an orders status, 
-                                and keep track of the orders you have previously made.
-                            </p>
-                            <div>
-                            <button mat-raised-button color="primary" type="submit" [routerLink]="'/contact'">Register</button>
-                            </div>
-                        </mat-card-content>
+                <mat-card-header>
+                    <mat-card-title>New Customer</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>By creating an account on our website you will
+                        be able to shop faster, be up to date on an orders status,
+                        and keep track of the orders you have previously made.
+                    </p>
+                    <div>
+                        <button mat-raised-button color="primary" type="submit"
+                            [routerLink]="'/contact'">Register</button>
+                    </div>
+                </mat-card-content>
             </mat-card>
             <mat-card>
                 <mat-card-header>
                     <!-- <div mat-card-avatar class="example-header-image"></div> -->
                     <mat-card-title>Returning Customer</mat-card-title>
                 </mat-card-header>
-                    <mat-card-content>
-                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-content">
-                            <mat-form-field appearance="fill">
-                                <mat-label>Username</mat-label>
-                                <input matInput formControlName="username" required>
-                                <mat-error *ngIf="loginForm.controls['username'].invalid">
-                                Username is required.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-form-field appearance="fill">
-                                <mat-label>Password</mat-label>
-                                <input matInput formControlName="password" required type="password">
-                                <mat-error *ngIf="loginForm.controls['password'].invalid">
+                <mat-card-content>
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="card-content">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Username</mat-label>
+                            <input matInput formControlName="username" required>
+                            <mat-error *ngIf="loginForm.controls['username'].invalid">
+                                username is required.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Password</mat-label>
+                            <input matInput formControlName="password" required type="password">
+                            <mat-error *ngIf="loginForm.controls['password'].invalid">
                                 Password is required.
-                                </mat-error>
-                            </mat-form-field>
-                            <mat-checkbox formControlName="remember">
-                                Remember me?
-                              </mat-checkbox>
-                            <div>
-                                <a mat-button (click)="goToRecoverComponent()">Forgot password?</a>
-                            </div>
-                            <div>
-                                <button mat-raised-button color="primary" type="submit">Log in</button>
-                            </div>
-                        </form>
-                        </mat-card-content>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-checkbox formControlName="remember">
+                            Remember me?
+                        </mat-checkbox>
+                        <div>
+                            <a mat-button (click)="goToRecoverComponent()">Forgot password?</a>
+                        </div>
+                        <div>
+                            <button mat-raised-button color="primary" type="submit">Log in</button>
+                        </div>
+                    </form>
+                </mat-card-content>
             </mat-card>
-          </div>
+        </div>
     </div>
 </div>

@@ -1,11 +1,10 @@
 .container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: 80vh;
   }
   
   .content {
-
     /* display: flex; */
     /* flex-direction: column;
     align-items: center;
@@ -14,9 +13,16 @@
     overflow: hidden; */
   }
 
+  .matCard{
+    width: 250px;
+  }
+
   .grid-container {
     justify-content: center;
     align-items: flex-start;
-    margin: 0 120px;
   }
   
+  img {
+    width: 250px; /* Set the desired width */
+    height: auto; /* Maintain aspect ratio */
+  }

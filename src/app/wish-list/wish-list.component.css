@@ -1,0 +1,10 @@
+
+wishlist-container{
+    max-width: 400px;
+}
+
+
+.product-image {
+    width: 200px; /* Set your desired width */
+    height: auto; /* Maintain the aspect ratio */
+  }

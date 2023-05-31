@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductsService } from '../products.service';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product.class';
+import { Galleria } from 'primeng/galleria';
 
 @Component({
   selector: 'app-home',
@@ -14,11 +15,12 @@ export class HomeComponent {
   filteredProducts: Product[] = [];
   selectedCategory: string | null = null;
 
-  constructor(private productsService: ProductsService, private route: ActivatedRoute) {}
+
+  constructor(private productsService: ProductsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-  this.getProducts();
-  this.getCategories();
+    this.getProducts();
+    this.getCategories();
   }
 
   getProducts(): void {
@@ -42,10 +44,8 @@ export class HomeComponent {
       }
     );
   }
+
   filterByCategory(category: string) {
-    // Implement the logic to filter products based on the selected category
-    // For example, you can filter the products array based on the category
     this.filteredProducts = this.products.filter(product => product.category === category);
   }
-
 }
