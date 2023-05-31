@@ -51,9 +51,7 @@ export class DashboardComponent implements OnInit {
     private dialogService: DialogService,
     private usernameService: UsernameService,
     private router: Router,
-    public dialog: MatDialog) {
-
-  }
+    public dialog: MatDialog) {}
 
 
   ngOnInit() {

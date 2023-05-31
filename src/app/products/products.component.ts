@@ -106,6 +106,7 @@ export class ProductsComponent implements OnInit {
     this.addProductToWishlist(product);
   }
 
+
   //recuperation de la wishList Data
   private getWishListData() {
     this.wishlistService.getProductsFromWishList()

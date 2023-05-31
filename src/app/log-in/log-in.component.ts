@@ -60,7 +60,7 @@ export class LogInComponent implements OnInit {
 
         if (roles.includes('ADMIN')) {
           //this.displayAdminButton = true;
-          this.router.navigate(['/products']);
+          this.router.navigate(['/dashboard']);
         } else {
           //this.displayAdminButton = false;
           this.router.navigate(['/products']);

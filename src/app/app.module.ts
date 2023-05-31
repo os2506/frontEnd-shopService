@@ -56,6 +56,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { CartComponent } from './cart/cart.component';
 import { RegisterComponent } from './register/register.component';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 @NgModule({
@@ -114,7 +115,8 @@ import { RegisterComponent } from './register/register.component';
     GalleriaModule,
     MatButtonModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CheckboxModule
   ],
   providers: [DialogService, AuthGuard],
   bootstrap: [AppComponent]
