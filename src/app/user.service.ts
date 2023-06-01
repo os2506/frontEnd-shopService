@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Utilisateur } from './utilisateur';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  private registeredUser = new Subject<string>();
   private apiUrl = 'http://localhost:8085';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   //recuperation des utilisateurs
   getUsers(): Observable<any> {
@@ -18,4 +20,17 @@ export class UserService {
     return this.http.get(url);
   }
 
+  setRegisteredUser(username: string): void {
+    this.registeredUser.next(username);
+  }
+
+  getRegisteredUser(): Observable<string> {
+    return this.registeredUser.asObservable();
+  }
+
+ 
+  getLoggedInUser(): string {
+    return this.authService.getUsername();
+  }
+  
 }

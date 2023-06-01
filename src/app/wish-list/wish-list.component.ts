@@ -62,6 +62,7 @@ export class WishListComponent implements OnInit {
           console.log("Response:", response);
           this.wishlist = this.wishlist.filter(item => item.id !== product.id);
            this.refreshWishlist();
+           location.reload(); 
         },
         error => {
           console.error(error);
@@ -78,7 +79,7 @@ export class WishListComponent implements OnInit {
       this.wishlistService.deleteAllFromWishlist(token).subscribe(
         response => {
           console.log("Response:", response);
-           location.reload();
+          location.reload();
         },
         error => {
           console.error(error);

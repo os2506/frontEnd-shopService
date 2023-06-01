@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 interface CartItem {
   name: string;
@@ -14,7 +15,16 @@ interface CartItem {
 })
 export class CartComponent {
 
+  firstFormGroup = this._formBuilder.group({
+    //firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+   // secondCtrl: ['', Validators.required],
+  });
+  isLinear = false;
   cartItems: CartItem[] = [];
+
+  constructor(private _formBuilder: FormBuilder) {}
 
   removeFromCart(item: CartItem): void {
     const index = this.cartItems.indexOf(item);

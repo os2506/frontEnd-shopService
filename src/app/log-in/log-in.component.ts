@@ -15,7 +15,7 @@ import { LoginResponse } from '../login-response';
 export class LogInComponent implements OnInit {
 
   loginForm!: FormGroup;
-  displayAdminButton = false;
+  isAdmin = false;
 
 
   constructor(private usernameService: UsernameService,
@@ -51,19 +51,24 @@ export class LogInComponent implements OnInit {
         const roles = response.roles;
         const token = response.token;
 
-        // Store the token in localStorage or wherever you need to use it
+        // Store the token in localStorage
         localStorage.setItem('token', token);
-
-        this.usernameService.setUsername(username); // Set the username using the service
-        this.authService.setRoles(roles); // Set the roles using the AuthService
+        // Store the username in localStorage
+        localStorage.setItem('user', username);
+        // Set the username using the service
+        this.usernameService.setUsername(username);
+         // Set the roles using the AuthService
+        this.authService.setRoles(roles);
+        // athentification
         this.authService.login(username, token);
 
+        // access to Admin Page
         if (roles.includes('ADMIN')) {
-          //this.displayAdminButton = true;
-          this.router.navigate(['/dashboard']);
-        } else {
-          //this.displayAdminButton = false;
           this.router.navigate(['/products']);
+          this.isAdmin = true;
+        } else {
+          this.router.navigate(['/products']);
+          this.isAdmin = false;
         }
       },
       error => {
