@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ export class RegisterComponent implements OnInit {
 
     registerForm!: FormGroup;
   
-    constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+    constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
   
     ngOnInit() {
       this.registerForm = this.formBuilder.group({
@@ -51,12 +52,18 @@ export class RegisterComponent implements OnInit {
       }
       // Get the form data
       const formData = this.registerForm.value;
+
+      console.log(formData.username);
   
       // Send the form data to the backend
       this.http.post('http://localhost:8085/users/register', formData).subscribe(
         response => {
           // Handle the response from the backend
           console.log(response);
+
+          localStorage.setItem('user', formData.username);
+
+          this.router.navigate(['/registration-success']);
         },
         error => {
           // Handle any errors that occurred during the request

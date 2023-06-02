@@ -34,6 +34,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 // PrimeNG modules
@@ -56,6 +57,8 @@ import { GalleriaModule } from 'primeng/galleria';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { CartComponent } from './cart/cart.component';
 import { RegisterComponent } from './register/register.component';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 
 
 @NgModule({
@@ -78,7 +81,8 @@ import { RegisterComponent } from './register/register.component';
     WishListComponent,
     ProductCreateComponent,
     CartComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegistrationSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +118,9 @@ import { RegisterComponent } from './register/register.component';
     GalleriaModule,
     MatButtonModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    CheckboxModule,
+    MatStepperModule
   ],
   providers: [DialogService, AuthGuard],
   bootstrap: [AppComponent]

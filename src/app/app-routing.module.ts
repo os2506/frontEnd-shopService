@@ -12,6 +12,7 @@ import { WishListComponent } from './wish-list/wish-list.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { CartComponent } from './cart/cart.component';
 import { RegisterComponent } from './register/register.component';
+import { RegistrationSuccessComponent } from './registration-success/registration-success.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'wishList', component: WishListComponent },
   { path: 'createProduct', component: ProductCreateComponent },
   { path: 'cart', component: CartComponent },
+  { path: 'registration-success', component: RegistrationSuccessComponent },
 ];
 
 @NgModule({

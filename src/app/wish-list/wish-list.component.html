@@ -1,6 +1,7 @@
 <div class="wishlist-container">
   <h2>Wishlist</h2>
   <div *ngIf="wishlist.length > 0">
+    <button mat-button color="warn" (click)="removeAllFromWishlist()">Remove All</button>
     <mat-card *ngFor="let product of wishlist">
       <mat-card-title>{{ product.name }}</mat-card-title>
       <img mat-card-image [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image"
@@ -11,6 +12,7 @@
         <mat-card-subtitle>Category: {{ product.category }}</mat-card-subtitle>
         <mat-card-subtitle>Inventory Status: {{ product.inventoryStatus }}</mat-card-subtitle>
       </mat-card-content>
+      <button mat-button color="warn" (click)="removeFromWishlist(product)">Remove from Wishlist</button>
     </mat-card>
   </div>
   <div *ngIf="wishlist.length === 0">

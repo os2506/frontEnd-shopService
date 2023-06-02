@@ -12,6 +12,7 @@ import { UsernameService } from '../username.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductCreateComponent } from '../product-create/product-create.component';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,8 +33,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('productEdit', { static: false }) // Add this line to get a reference to the ProductEditComponent
   productEdit!: ProductEditComponent;
   username!: string;
-
-  displayAdminButton = false;
+  isLoggedIn: boolean = false;
 
   openCreateForm = false; // flag to control the visi of the dialog create form product 
 
@@ -51,15 +51,35 @@ export class DashboardComponent implements OnInit {
     private dialogService: DialogService,
     private usernameService: UsernameService,
     private router: Router,
-    public dialog: MatDialog) {
-
-  }
+    private authService: AuthService,
+    public dialog: MatDialog) {}
 
 
   ngOnInit() {
 
-    this.usernameService.getUsername().subscribe((username: string) => {
-      this.username = username;
+    // this.usernameService.getUsername().subscribe((username: string) => {
+    //   this.username = username;
+    // });
+
+    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      this.isLoggedIn = isLoggedIn;
+      console.log(isLoggedIn); //true
+      const storedUserData = localStorage.getItem('user');
+      console.log('Const Stored User Data:', storedUserData);
+
+      try {
+
+        if (storedUserData) {
+          this.username = storedUserData;
+          this.isLoggedIn = true;
+          console.log('Username:', this.username);
+        }else{
+          console.log('Usernam Not FOUND on the storage');
+        }
+
+      } catch (error) {
+        console.error('Error parsing user data from local storage:', error);
+      }
     });
 
     this.items = [
@@ -113,7 +133,8 @@ export class DashboardComponent implements OnInit {
       },
       {
         label: 'Quit',
-        icon: 'pi pi-fw pi-power-off'
+        icon: 'pi pi-fw pi-power-off',
+        command: () => this.logOut()
       }
     ];
 
@@ -232,5 +253,9 @@ export class DashboardComponent implements OnInit {
   }
 
 
-
+  logOut() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.router.navigate(['/products']);
+  }
 }

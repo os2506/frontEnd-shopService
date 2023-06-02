@@ -1,6 +1,6 @@
-<p-menubar [model]="items" *ngIf="displayAdminButton">
+<p-menubar [model]="items">
   <ng-template pTemplate="start">
-    <!-- <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" /> -->
+    <img src="https://primefaces.org/cdn/primeng/images/primeng.svg" height="40" class="mr-2" />
   </ng-template>
   <ng-template pTemplate="end">
     <div class="username-display" *ngIf="username">
@@ -11,7 +11,7 @@
 
 
 <!-- UTILISATEUR -->
-<div class="card" *ngIf="displayAdminButton">
+<div class="card">
   <p-table *ngIf="showUserTable" [columns]="cols" [value]="users" [tableStyle]="{ 'min-width': '50rem' }">
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -57,7 +57,7 @@
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         Products
-        <p-button icon="pi pi-refresh"></p-button>
+        <!-- <p-button icon="pi pi-refresh"></p-button> -->
       </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -106,6 +106,15 @@
         <td>
           <p-tag [value]="product.inventoryStatus" [severity]="getSeverity(product.inventoryStatus)"></p-tag>
         </td>
+        <td>
+          <i class="pi pi-info-circle"></i>
+        </td>
+        <td>
+          <i class="pi pi-pencil"></i>
+        </td>
+        <td>
+          <i class="pi pi-trash"></i>
+        </td>
       </tr>
     </ng-template>
 
@@ -119,6 +128,7 @@
     <!-- Table footer paginator -->
     <ng-template pTemplate="paginatorleft">
       <p-button type="button" icon="pi pi-refresh" styleClass="p-button-text"></p-button>
+      <p-button type="button" icon="pi pi-file" styleClass="p-button-text"></p-button>
       <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"
         (click)="openDialogCreateProduit()"></p-button>
     </ng-template>

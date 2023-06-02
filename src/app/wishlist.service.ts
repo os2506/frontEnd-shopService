@@ -19,6 +19,7 @@ export class WishlistService {
   constructor(private http: HttpClient) { }
 
 
+  // addWishList
   addWishlist(product: Product, token: string): Observable<Response> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -27,6 +28,29 @@ export class WishlistService {
     return this.http.post<Response>(this.wishlistUrl, product, { headers });
   }
 
+
+  // deleteWishList by productId
+  deleteWishlist(product: Product, token: string): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    const options = { headers: headers, body: product };
+    return this.http.delete<Response>('http://localhost:8085/wishlists/delete', options);
+  }
+
+
+  // delete All WishList
+  deleteAllFromWishlist(token : string): Observable<Response> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`
+    });
+    const options = { headers: headers };
+    return this.http.delete<Response>('http://localhost:8085/wishlists/deleteAll', options);
+  }
+
+  // get All WishList
   getProductsFromWishList(): BehaviorSubject<Product[]> {
     if (this.wishlistItems.length === 0) {
       const token = localStorage.getItem('token');

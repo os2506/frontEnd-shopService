@@ -13,7 +13,6 @@ export class AuthService {
   constructor() {
   }
 
-
   // Method to check if the user is logged in
   isLoggedIn(): Observable<boolean> {
     return this.loggedIn.asObservable();
@@ -36,17 +35,23 @@ export class AuthService {
   }
 
   // Method to log in the user
+  // login(username: string, token: string): void {
+  //   this.loggedIn.next(true);
+  // }
+
   login(username: string, token: string): void {
-    //localStorage.setItem('token', token);
+    this.username = username;
+    localStorage.setItem('username', username);
     this.loggedIn.next(true);
-    console.log(localStorage.getItem('token'));
-    //this.username = this.getUsernameFromToken(token);
   }
+
+
 
   // Method to log out the user
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    //this.username = '';
     this.loggedIn.next(false);
-    this.username = '';
   }
 }
