@@ -32,5 +32,11 @@ export class UserService {
   getLoggedInUser(): string {
     return this.authService.getUsername();
   }
+
+  delete(id: number): Observable<any> {
+    console.log("delete user service");
+    const url = `${this.apiUrl}/users/${id}`;
+    return this.http.delete(url);
+  }
   
 }

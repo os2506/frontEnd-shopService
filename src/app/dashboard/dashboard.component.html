@@ -18,6 +18,7 @@
         <th *ngFor="let col of columns">
           {{ col.header }}
         </th>
+        <th>Actions</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -31,6 +32,11 @@
           <ng-container *ngIf="!col.bodyTemplate && col.field !== 'roles'">
             {{ rowData[col.field] }}
           </ng-container>
+        </td>
+        <td>
+          <button mat-button (click)="deleteUser(rowData)" aria-label="Delete user">
+            <i class="pi pi-user-minus"></i>
+          </button>
         </td>
       </tr>
     </ng-template>
