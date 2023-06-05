@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductCreateComponent } from '../product-create/product-create.component';
 import { AuthService } from '../auth.service';
+import { lastValueFrom } from 'rxjs';
+import { ConfirmDialog } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -92,10 +94,6 @@ export class DashboardComponent implements OnInit {
             icon: 'pi pi-fw pi-user-plus'
           },
           {
-            label: 'Delete',
-            icon: 'pi pi-fw pi-user-minus'
-          },
-          {
             icon: 'pi pi-fw pi-bars',
             label: 'List',
             command: () => {
@@ -149,7 +147,7 @@ export class DashboardComponent implements OnInit {
           { field: 'email', header: 'Email' },
           { field: 'city', header: 'City' },
           { field: 'state', header: 'State' },
-          { field: 'postalCode', header: 'PostalCode' },
+          { field: 'postalCode', header: 'Postal code' },
           { field: 'subscribe', header: 'Subscribe' },
           { field: 'roles', header: 'Roles', bodyTemplate: this.rolesTemplate }
         ];
@@ -241,8 +239,6 @@ export class DashboardComponent implements OnInit {
   cancelEdit(): void {
   }
 
-
-
   openDialogCreateProduit() {
     console.log('creation produit');
     const dialogRef = this.dialog.open(ProductCreateComponent);
@@ -252,10 +248,31 @@ export class DashboardComponent implements OnInit {
     this.openCreateForm = true;
   }
 
-
   logOut() {
     this.authService.logout();
     this.isLoggedIn = false;
     this.router.navigate(['/products']);
+  }
+
+  deleteUser(user: any) {
+
+    // Open dialog to confirm deleting
+    const dialogRef = this.dialog.open(ConfirmDialog);
+    dialogRef.componentInstance.textContent = 'Are you sure you want to delete this user ?';
+    dialogRef.componentInstance.textCancelButton = 'No';
+    dialogRef.componentInstance.textConfirmButton = 'Yes';
+
+    dialogRef.afterClosed().subscribe(async result => {
+
+      // Delete user
+      if (result) {
+        var index = this.users.indexOf(user);
+        if (index >= 0) {
+          await lastValueFrom(this.userService.delete(user.id));
+          this.users.splice(index, 1);
+        }
+      }
+
+    });
   }
 }
