@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>Update user</h2>
+<mat-dialog-content>
+    <p>
+        <mat-form-field>
+            <mat-label>City</mat-label>
+            <input placeholder="City" matInput [(ngModel)]="data.city" appearance="fill" required>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-label>Postal code</mat-label>
+            <input placeholder="Postal code" matInput [(ngModel)]="data.postalCode" appearance="fill" required>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-label>State</mat-label>
+            <input placeholder="Role" matInput [(ngModel)]="data.state" appearance="fill" required>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select [(ngModel)]="data.roles" multiple>
+              <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input placeholder="Email" matInput [(ngModel)]="data.email" appearance="fill" required>
+        </mat-form-field>
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="onClickUpdate(data)" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
