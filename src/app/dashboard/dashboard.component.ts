@@ -13,8 +13,9 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductCreateComponent } from '../product-create/product-create.component';
 import { AuthService } from '../auth.service';
-import { lastValueFrom } from 'rxjs';
+import { Subscription, lastValueFrom } from 'rxjs';
 import { ConfirmDialog } from '../confirm-dialog/confirm-dialog.component';
+import { UpdateUserDialogComponent, UpdateUserDialogData } from '../update-user-dialog/update-user-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -45,8 +46,6 @@ export class DashboardComponent implements OnInit {
   //suppression
   selectedProduct: Product | undefined;
 
-
-
   //constructor
   constructor(private userService: UserService,
     private productService: ProductsService,
@@ -55,7 +54,6 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     public dialog: MatDialog) {}
-
 
   ngOnInit() {
 
@@ -242,6 +240,7 @@ export class DashboardComponent implements OnInit {
   openDialogCreateProduit() {
     console.log('creation produit');
     const dialogRef = this.dialog.open(ProductCreateComponent);
+    
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -273,6 +272,36 @@ export class DashboardComponent implements OnInit {
         }
       }
 
+    });
+  }
+
+  updateUser(user: any) {
+
+    var updateUserDialogData: UpdateUserDialogData = {
+      id: user.id,
+      city: user.city,
+      email: user.email,
+      postalCode: user.postalCode,
+      roles: user.roles,
+      state: user.state
+    }
+
+    // Open dialog to update
+    const dialogRef = this.dialog.open(UpdateUserDialogComponent, 
+      {
+        data: updateUserDialogData,
+      });
+
+    dialogRef.beforeClosed().subscribe(async result => {
+
+      // Update user
+      if (result) {
+        user.city = result.city;
+        user.email = result.email;
+        user.postalCode = result.postalCode;
+        user.state = result.state;
+        user.roles = result.roles;
+      }
     });
   }
 }

@@ -34,6 +34,9 @@
           </ng-container>
         </td>
         <td>
+          <button mat-button (click)="updateUser(rowData)" aria-label="Update user">
+            <i class="pi pi-user-edit"></i>
+          </button>
           <button mat-button (click)="deleteUser(rowData)" aria-label="Delete user">
             <i class="pi pi-user-minus"></i>
           </button>

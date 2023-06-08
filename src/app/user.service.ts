@@ -3,6 +3,7 @@ import { Utilisateur } from './utilisateur';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { AuthService } from './auth.service';
+import { UpdateUserDialogData } from './update-user-dialog/update-user-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -34,9 +35,13 @@ export class UserService {
   }
 
   delete(id: number): Observable<any> {
-    console.log("delete user service");
     const url = `${this.apiUrl}/users/${id}`;
     return this.http.delete(url);
+  }
+
+  update(id: number, data: UpdateUserDialogData): Observable<any> {
+    const url = `${this.apiUrl}/users/${id}`;
+    return this.http.patch(url, data);
   }
   
 }
